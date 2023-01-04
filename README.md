@@ -8,7 +8,7 @@ Refer to  [DivideMix](https://github.com/LiJunnan1992/DivideMix).
 
 ## Model training
 
-(1) To run training on CIFAR-10/CIFAR-100 in **Sym** or **Asy** noise scenario with different noise ratios,
+(1) To run training on CIFAR-10/CIFAR-100 in **sym** or **asym** noise scenario with the noise ratios **0.20**, **0.50**, **0.80**, **0.90**, _ etc._,
 
 `python ./cifar/main.py --dataset cifar10 --num_class 10 --batch_size 128 --data_path ./data/cifar-10-batches-py/ --r 0.50 --noise_mode sym --remark exp-ID`
 
