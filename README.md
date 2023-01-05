@@ -1,5 +1,5 @@
 # LNL-NCE
-A pytorch implementation for "Neighborhood Collective Estimation for Noisy Label Identification and Correction", accepted by ECCV2022. More details of this work can be found in our paper: [Arxiv](https://arxiv.org/abs/2208.03207) or [PDF](https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136840126.pdf).
+A pytorch implementation for "Neighborhood Collective Estimation for Noisy Label Identification and Correction", accepted by ECCV2022. More details of this work can be found in our paper: [Arxiv](https://arxiv.org/abs/2208.03207) or [ECCV2022](https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136840126.pdf).
 
 
 ## Installation
