@@ -11,6 +11,7 @@ Refer to  [DivideMix](https://github.com/LiJunnan1992/DivideMix).
 (1) To run training on CIFAR-10/CIFAR-100 with the noise modes **sym** or **asym** and noise ratios **0.20**, **0.50**, **0.80**, **0.90**, etc.,
 
 `CUDA_VISIBLE_DEVICES=0 python ./cifar/main.py --dataset cifar10 --num_class 10 --batch_size 128 --data_path ./data/cifar-10/ --r 0.50 --noise_mode sym --remark exp-ID`
+
 `CUDA_VISIBLE_DEVICES=0 python ./cifar/main.py --dataset cifar100 --num_class 100 --batch_size 128 --data_path ./data/cifar-100/ --r 0.50 --noise_mode sym --remark exp-ID`
 
 
