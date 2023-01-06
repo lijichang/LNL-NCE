@@ -180,7 +180,7 @@ def nclc(net, net2, labeled_trainloader, unlabeled_trainloader, testloader, thre
 
     return torch.from_numpy(pseudo_labels)
 
-def warmup(epoch, net,  optimizer, dataloader, CEloss, args, conf_penalty):
+def warmup(epoch, net,  optimizer, dataloader, CEloss, args, conf_penalty, log):
     net.train()
     num_iter = (len(dataloader.dataset) // dataloader.batch_size) + 1
     for batch_idx, (inputs, labels, gt_labels, index) in enumerate(dataloader):
@@ -198,11 +198,11 @@ def warmup(epoch, net,  optimizer, dataloader, CEloss, args, conf_penalty):
         optimizer.step()
 
         if (batch_idx + 1) % 50 == 0:
-            sys.stdout.write('\r')
-            sys.stdout.write('%s:%.1f-%s | Epoch [%3d/%3d] Iter[%3d/%3d]\t CE-loss: %.4f'
+            log.write('\r')
+            log.write('%s:%.1f-%s | Epoch [%3d/%3d] Iter[%3d/%3d]\t CE-loss: %.4f'
                              % (args.dataset, args.r, args.noise_mode, epoch, args.num_epochs, batch_idx + 1, num_iter,
                                 loss.item()))
-            sys.stdout.flush()
+            log.flush()
 
 def train(epoch, net, net2, optimizer, labeled_trainloader, unlabeled_trainloader, args, pseudo_labels, log):
     net.train()

@@ -1,13 +1,10 @@
 from __future__ import print_function
-import sys
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.backends.cudnn as cudnn
-import torch.nn.functional as F
 import random
-import os
-import argparse
+import os, datetime, argparse
 from PreResNet import *
 import dataloader_cifar as dataloader
 from utils import NegEntropy
@@ -16,9 +13,6 @@ from utils import train
 from utils import warmup
 from utils import ncnv, nclc
 from utils import create_folder_and_save_pyfile
-import datetime
-
-run_time = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR Training')
 parser.add_argument('--batch_size', default=128, type=int, help='train batchsize')
@@ -29,13 +23,13 @@ parser.add_argument('--T', default=0.5, type=float, help='sharpening temperature
 parser.add_argument('--num_epochs', default=300, type=int)
 parser.add_argument('--lr_switch_epoch', default=150, type=int)
 parser.add_argument('--r', default=0.5, type=float, help='noise ratio')
+parser.add_argument('--drop', default=0.0, type=float)
 parser.add_argument('--seed', default=123)
 parser.add_argument('--gpuid', default=0, type=int)
 parser.add_argument('--num_class', default=10, type=int)
 parser.add_argument('--data_path', default='./cifar-10', type=str, help='path to dataset')
 parser.add_argument('--dataset', default='cifar10', type=str)
 parser.add_argument('--remark', default='', type=str)
-parser.add_argument('--drop', default=0.0, type=float)
 args = parser.parse_args()
 
 torch.cuda.set_device(args.gpuid)
@@ -43,6 +37,7 @@ random.seed(args.seed)
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed_all(args.seed)
 
+run_time = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 root_folder = create_folder_and_save_pyfile(run_time + "-" + args.remark, args)
 record_log = open(os.path.join(root_folder, '%s_%.2f_%s' % (args.dataset, args.r, args.noise_mode) + '_records.txt'), 'a+')
 test_log = open(os.path.join(root_folder, '%s_%.2f_%s' % (args.dataset, args.r, args.noise_mode) + '_results.txt'), 'a+')
@@ -97,16 +92,16 @@ for epoch in range(args.num_epochs + 1):
     for param_group in optimizer2.param_groups:
         param_group['lr'] = lr
 
+    warmup_trainloader = loader.run('warmup')
     test_loader = loader.run('test')
     eval_loader = loader.run('eval_train')
 
     # model training
     if epoch < warm_up:
-        warmup_trainloader = loader.run('warmup')
         print('Warmup Net1')
         warmup(epoch, net1, optimizer1, warmup_trainloader, CEloss, args, conf_penalty)
         print('\nWarmup Net2')
-        warmup(epoch, net2, optimizer2, warmup_trainloader, CEloss, args, conf_penalty)
+        warmup(epoch, net2, optimizer2, warmup_trainloader, CEloss, args, conf_penalty, log=record_log)
 
     else:
         prob1 = ncnv(net1, eval_loader, batch_size=args.batch_size, num_class=args.num_class)
