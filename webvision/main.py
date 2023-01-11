@@ -19,7 +19,7 @@ parser.add_argument('--lr', '--learning_rate', default=0.01, type=float, help='i
 parser.add_argument('--noise_mode', default='natrual')
 parser.add_argument('--alpha', default=0.5, type=float, help='parameter for Beta')
 parser.add_argument('--T', default=0.5, type=float, help='sharpening temperature')
-parser.add_argument('--num_epochs', default=120, type=int)
+parser.add_argument('--num_epochs', default=80, type=int)
 parser.add_argument('--warm_up', default=1, type=int)
 parser.add_argument('--r', default=0.0, type=float, help='noise ratio')
 parser.add_argument('--seed', default=123)
