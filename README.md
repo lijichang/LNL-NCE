@@ -15,6 +15,7 @@ Refer to  [DivideMix](https://github.com/LiJunnan1992/DivideMix).
 `CUDA_VISIBLE_DEVICES=0 python ./cifar/main.py --dataset cifar100 --num_class 100 --batch_size 128 --data_path ./data/cifar-100/ --r 0.50 --noise_mode sym --remark exp-ID`
 
 (2) To run training on Webvision-1.0,
+
 `CUDA_VISIBLE_DEVICES=0,1,2 python ./webvision/main.py --data_path ./data/webvision/ --remark exp-ID`
 
 ### Citation
