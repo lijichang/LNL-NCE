@@ -299,10 +299,12 @@ def train(epoch, net, net2, optimizer, labeled_trainloader, unlabeled_trainloade
 def test(epoch, net1, net2, test_log, test_loader):
     net1.eval()
     net2.eval()
+    
     correct = 0
     total = 0
     with torch.no_grad():
         for _, (inputs, targets) in enumerate(test_loader):
+            
             inputs, targets = inputs.cuda(), targets.cuda()
             outputs1 = net1(inputs)
             outputs2 = net2(inputs)
