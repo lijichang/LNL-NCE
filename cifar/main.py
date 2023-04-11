@@ -55,7 +55,7 @@ elif args.dataset == 'cifar100':
     threshold_scor = 0.01
     if args.r == 0.5:
         threshold_scor = 0.005
-if args.r < 0.2:
+if args.r <= 0.2:
     threshold_scor = 0.0
 
 print('| Building net')
